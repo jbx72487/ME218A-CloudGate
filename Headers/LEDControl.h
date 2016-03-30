@@ -1,0 +1,60 @@
+#ifndef LED_CONTROL_H
+#define LED_CONTROL_H
+
+#include "ES_Configure.h"
+#include "ES_Types.h"
+
+// define names for bitmasks of individual or groups of LEDs
+#define LED_ALL_INDIV (0xffffffff & ~LED_ALL_CITIES)
+#define LED_ALL_CITIES (LED_ALL_CITIES_RED | LED_ALL_CITIES_BLUE)
+#define LED_START_BUTTON BIT0HI
+#define LED_YELLOW_CHEM BIT1HI
+#define LED_BLUE_CHEM BIT2HI
+#define LED_BACK_MIX BIT4HI
+#define LED_BACK_ARROW (BIT3HI | BIT7HI | BIT8HI)
+#define LED_BACK_PUMP BIT5HI
+#define LED_BACK_SPRAY BIT6HI
+// #define LED_BACK_PUMP3 BIT7HI
+// #define LED_BACK_SPRAY BIT8HI
+// #define LED_SHOOTING_INDICATOR BIT9HI
+
+// WARNING: DO NOT SWITCH ORDER OF THESE PINS!! We use bitshifting to get from one to the other, so DO NOT SWITCH IT UP
+#define LED_CANISTER1 BIT10HI
+#define LED_CANISTER2 BIT11HI
+#define LED_CANISTER3 BIT12HI
+#define LED_CANISTER4 BIT13HI
+#define LED_CANISTER5 BIT14HI
+#define LED_CANISTER6 BIT15HI
+
+// #define TITLE_1 BIT16HI
+// #define TITLE_2 BIT17HI
+// #define TITLE_3 BIT18HI
+#define LED_SHOOTING_INDICATOR (BIT19HI | BIT20HI | BIT21HI)
+// #define TITLE_5 BIT20HI
+// #define TITLE_6 BIT21HI
+
+// WARNING: DO NOT SWITCH ORDER OF THESE PINS!! We use bitshifting to get from one to the other, so DO NOT SWITCH IT UP
+#define LED_FIRST_RED LED_SACRAMENTO_RED
+#define LED_FIRST_BLUE LED_SACRAMENTO_BLUE
+#define LED_SACRAMENTO_RED BIT22HI
+#define LED_SF_RED BIT23HI
+#define LED_YOSEMITE_RED BIT24HI
+#define LED_LA_RED BIT25HI
+#define LED_SD_RED BIT26HI
+#define LED_SACRAMENTO_BLUE BIT27HI
+#define LED_SF_BLUE BIT28HI
+#define LED_YOSEMITE_BLUE BIT29HI
+#define LED_LA_BLUE BIT30HI
+#define LED_SD_BLUE BIT31HI
+#define LED_ALL_CITIES_BLUE (LED_SACRAMENTO_BLUE | LED_SF_BLUE | LED_YOSEMITE_BLUE | LED_LA_BLUE | LED_SD_BLUE)
+#define LED_ALL_CITIES_RED (LED_SACRAMENTO_RED | LED_SF_RED | LED_YOSEMITE_RED | LED_LA_RED | LED_SD_RED)
+
+
+typedef enum {ON, OFF, FLASHING, CITY_ON, CITY_OFF} LEDMode_t;
+
+bool InitLEDControl(uint8_t Priority);
+bool PostLEDControl(ES_Event ThisEvent);
+ES_Event RunLEDControl(ES_Event ThisEvent);
+void setLED(uint32_t whichLED, LEDMode_t flashState);
+
+#endif // LED_CONTROL_H
